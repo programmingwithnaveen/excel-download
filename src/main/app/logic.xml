@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <spring:beans>
+        <spring:bean id="ExcelDownload" name="ExcelDownloadBean" class="com.pwn.download.ExcelDownload"/>
+    </spring:beans>
+    <flow name="get:/excel:api-config">
+    <logger message="Start of Excel Download flow" level="INFO" doc:name="Logger"/>
+         
+      
+		  <invoke name="downloadFile" object-ref="ExcelDownloadBean" method="downloadFile" doc:name="downloadFile"/>
+		  
+		<set-property propertyName="Content-Type" value="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" doc:name="Set Content-Type Property"/>
+        <set-property propertyName="Content-Disposition" value="attachment; filename=data.xlsx" doc:name="Set ContentDisposition Property"/>
+		  
+        <logger message="End of Excel Download flow" level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>

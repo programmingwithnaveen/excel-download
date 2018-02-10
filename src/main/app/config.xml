@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd">
+   <choice-exception-strategy name="Exception_Strategy" >
+    
+     <catch-exception-strategy doc:name="Global Exception Strategy" when="#[exception.causedBy(java.lang.Exception)]">
+             <logger level="INFO" doc:name="Logger" message="Exception caught4: #[message]"/>
+            <set-payload doc:name="Set Payload" value="{ &quot;status&quot; : &quot;error&quot;, &quot;reason&quot; : &quot;error&quot;}  "/>
+            <logger level="INFO" doc:name="Logger" message="Response updated: #[payload]"/>
+    
+    </catch-exception-strategy>
+   </choice-exception-strategy>
+</mule>
